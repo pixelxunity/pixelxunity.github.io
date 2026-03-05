@@ -2,467 +2,734 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="description" content="PIXEL — Born from the grid. Built by the community." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PIXEL</title>
+  <meta name="description" content="PIXEL — a space traveler on Earth. The community becomes the mission." />
+  <meta name="theme-color" content="#07090d" />
 
   <style>
     :root{
-      --bg:#050507;
-      --panel:#0b0b10;
-      --text:#ffffff;
-      --muted:#b6b6c6;
-      --line:#1b1b24;
-      --glow: 0 0 18px rgba(255,255,255,.08);
-      --radius: 20px;
-      --accent:#ffffff;
+      --bg:#05070b;
+      --panel:#0b0f16;
+      --text:#f4f6ff;
+      --muted:#a7afc6;
+      --line:rgba(255,255,255,.10);
+      --radius:20px;
+      --glow: 0 0 22px rgba(107,255,183,.10);
+      --green:#6bffb7;
+      --blue:#5aa7ff;
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      background:
-        radial-gradient(900px 520px at 50% -10%, rgba(255,255,255,.10), transparent 60%),
-        radial-gradient(900px 600px at 10% 35%, rgba(255,255,255,.06), transparent 58%),
-        radial-gradient(900px 600px at 90% 55%, rgba(255,255,255,.05), transparent 55%),
-        var(--bg);
       color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
-      line-height:1.55;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif;
+      background:
+        radial-gradient(800px 500px at 50% -10%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(900px 600px at 10% 30%, rgba(90,167,255,.10), transparent 55%),
+        radial-gradient(900px 600px at 90% 60%, rgba(107,255,183,.08), transparent 55%),
+        var(--bg);
       overflow-x:hidden;
     }
 
-    /* Pixel grid overlay */
+    a{color:inherit; text-decoration:none}
+
+    /* subtle pixel grid overlay */
     .grid{
       position:fixed; inset:0;
-      background-image:
-        linear-gradient(to right, rgba(255,255,255,.045) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,.045) 1px, transparent 1px);
-      background-size: 30px 30px;
-      opacity:.16;
       pointer-events:none;
-      mask-image: radial-gradient(closest-side at 50% 18%, rgba(0,0,0,1), rgba(0,0,0,0));
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 26px 26px;
+      opacity:.12;
+      mask-image: radial-gradient(60% 60% at 50% 20%, black 40%, transparent 80%);
+      z-index:0;
+    }
+
+    /* Animated Pixel Scan Effect */
+    .scan{
+      position:fixed; inset:0;
+      pointer-events:none;
+      z-index:1;
+      opacity:.18;
+      background:
+        linear-gradient(to bottom,
+          transparent 0%,
+          rgba(107,255,183,.08) 48%,
+          rgba(107,255,183,.18) 50%,
+          rgba(90,167,255,.10) 52%,
+          transparent 100%);
+      mix-blend-mode: screen;
+      transform: translateY(-120%);
+      animation: scanline 6.5s linear infinite;
+      filter: blur(.2px);
+      mask-image: radial-gradient(70% 55% at 50% 25%, black 55%, transparent 90%);
+    }
+    @keyframes scanline{
+      0%{ transform: translateY(-120%); }
+      100%{ transform: translateY(120%); }
+    }
+
+    /* light CRT-ish shimmer */
+    .flicker{
+      position:fixed; inset:0;
+      pointer-events:none;
+      z-index:1;
+      opacity:.05;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,.25) 0px,
+        rgba(255,255,255,.25) 1px,
+        transparent 2px,
+        transparent 4px
+      );
+      mix-blend-mode: overlay;
     }
 
     .wrap{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 22px 16px 70px;
+      width:min(1080px, 92vw);
+      margin: 28px auto 80px;
       position:relative;
+      z-index:2;
     }
 
-    /* Top nav */
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      padding:10px 6px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      text-decoration:none;
-      color:var(--text);
-    }
-
-    .brandMark{
-      width:38px; height:38px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.05);
-      box-shadow: var(--glow);
-      display:grid;
-      place-items:center;
-      overflow:hidden;
-    }
-    .brandMark img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      image-rendering: pixelated;
-    }
-    .brandText{
-      font-weight:900;
-      letter-spacing:.22em;
-      font-size:13px;
-      text-transform:uppercase;
-      opacity:.95;
-    }
-
+    /* top nav */
     .nav{
-      display:flex;
-      gap:10px;
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 16px;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius: 999px;
+      box-shadow: var(--glow);
+      backdrop-filter: blur(10px);
+      gap:14px;
+    }
+    .brand{
+      display:flex; gap:10px; align-items:center;
+      font-weight:800; letter-spacing:.14em;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, var(--green), rgba(107,255,183,.25));
+      box-shadow: 0 0 16px rgba(107,255,183,.35);
+      flex:0 0 auto;
+    }
+    .links{
+      display:flex; gap:18px; align-items:center;
+      color:var(--muted);
+      font-weight:700;
+      font-size:14px;
       flex-wrap:wrap;
       justify-content:flex-end;
     }
-    .nav a{
-      color:var(--muted);
-      text-decoration:none;
-      font-size:13px;
-      padding:8px 10px;
-      border-radius:12px;
-      border:1px solid transparent;
-    }
-    .nav a:hover{
-      color:var(--text);
-      border-color:var(--line);
-      background: rgba(255,255,255,.03);
+    .links a:hover{color:var(--text)}
+
+    /* hero */
+    .hero{
+      margin-top:18px;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--glow);
+      backdrop-filter: blur(10px);
+      padding: 22px;
     }
 
-    /* Hero */
-    .hero{
-      margin-top:14px;
-      padding: 46px 18px 34px;
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border-radius: var(--radius);
-      box-shadow: var(--glow);
-      position:relative;
-      overflow:hidden;
-      text-align:center;
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      align-items:center;
     }
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(560px 240px at 50% 20%, rgba(255,255,255,.13), transparent 60%);
-      pointer-events:none;
+    @media (max-width: 860px){
+      .heroGrid{grid-template-columns:1fr}
     }
 
     .kicker{
-      margin:0 0 10px;
       color:var(--muted);
-      font-size:12px;
-      letter-spacing:.22em;
       text-transform:uppercase;
-      position:relative;
-      z-index:2;
-    }
-
-    .heroLogo{
-      width: 160px;
-      height: 160px;
-      margin: 16px auto 18px;
-      border-radius: 26px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      box-shadow: 0 14px 50px rgba(0,0,0,.45), var(--glow);
-      overflow:hidden;
-      position:relative;
-      z-index:2;
-      transform-origin: 50% 70%;
-      animation: wobble 3.2s ease-in-out infinite;
-    }
-
-    /* Dezent “wackeln” (nicht kitschig) */
-    @keyframes wobble{
-      0%   { transform: rotate(-1.2deg) translateY(0); }
-      25%  { transform: rotate(1.4deg) translateY(-1px); }
-      50%  { transform: rotate(-1.0deg) translateY(0); }
-      75%  { transform: rotate(1.0deg) translateY(1px); }
-      100% { transform: rotate(-1.2deg) translateY(0); }
-    }
-
-    .heroLogo img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      image-rendering: pixelated;
+      letter-spacing:.20em;
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:10px;
     }
 
     h1{
       margin:0;
-      font-size: clamp(46px, 6.4vw, 78px);
-      letter-spacing:.22em;
+      font-size:52px;
+      letter-spacing:.18em;
+      line-height:1.02;
       text-transform:uppercase;
-      position:relative;
-      z-index:2;
-      text-shadow: 0 0 16px rgba(255,255,255,.10);
     }
 
-    .tagline{
-      max-width: 70ch;
-      margin: 14px auto 0;
+    .sub{
+      margin:14px 0 0;
       color:var(--muted);
-      font-size: clamp(15px, 2.2vw, 18px);
-      position:relative;
-      z-index:2;
+      max-width: 70ch;
+      font-size:15px;
+      line-height:1.6;
     }
 
-    /* Buttons */
-    .cta{
-      display:flex;
-      gap:12px;
-      justify-content:center;
-      flex-wrap:wrap;
-      margin-top: 22px;
-      position:relative;
-      z-index:2;
+    .ctaRow{
+      display:flex; flex-wrap:wrap;
+      gap:10px;
+      margin-top:18px;
     }
     .btn{
-      appearance:none;
+      display:inline-flex; gap:10px; align-items:center; justify-content:center;
+      padding: 10px 14px;
+      border-radius: 12px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.05);
+      background: rgba(255,255,255,.06);
       color:var(--text);
-      padding:12px 16px;
-      border-radius: 14px;
-      text-decoration:none;
       font-weight:800;
       font-size:14px;
-      letter-spacing:.04em;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      box-shadow: var(--glow);
+      transition: transform .08s ease, background .18s ease, border-color .18s ease;
+      cursor:pointer;
     }
-    .btn:hover{ background: rgba(255,255,255,.08); }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+    }
     .btn.primary{
-      background:#fff;
-      color:#000;
-      border-color:#fff;
-      box-shadow: 0 10px 28px rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(107,255,183,.20), rgba(107,255,183,.10));
+      border-color: rgba(107,255,183,.35);
     }
-    .btn.primary:hover{ opacity:.92; }
+    .btn.secondary{
+      background: linear-gradient(180deg, rgba(90,167,255,.18), rgba(90,167,255,.08));
+      border-color: rgba(90,167,255,.35);
+    }
 
-    .coin{
-      width:22px; height:22px;
-      border-radius: 999px;
-      background: rgba(0,0,0,.86);
-      border:1px solid rgba(255,255,255,.65);
-      display:grid;
-      place-items:center;
-      font-weight:900;
+    /* logo / status side */
+    .logoCard{
+      border:1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(0,0,0,.20);
+      padding: 16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .logoWrap{
+      display:flex; align-items:center; justify-content:center;
+      padding: 10px 0 4px;
+    }
+
+    /* Clickable pixel logo (Easter egg trigger) */
+    .pixelLogoBtn{
+      border:0;
+      background:transparent;
+      padding:0;
+      cursor:pointer;
+      border-radius: 18px;
+      outline: none;
+    }
+    .pixelLogoBtn:focus-visible{
+      box-shadow: 0 0 0 3px rgba(107,255,183,.25);
+    }
+
+    .pixelLogo{
+      width: 180px;
+      max-width: 100%;
+      height:auto;
+      image-rendering: pixelated;
+      filter: drop-shadow(0 14px 26px rgba(0,0,0,.45));
+      animation: wobble 2.8s ease-in-out infinite;
+      transform-origin: 50% 70%;
+      display:block;
+    }
+    @keyframes wobble{
+      0%,100%{transform: rotate(-1.2deg) translateY(0)}
+      50%{transform: rotate(1.2deg) translateY(-2px)}
+    }
+
+    .chips{
+      display:flex; flex-wrap:wrap;
+      gap:8px;
+      margin-top: 14px;
+    }
+    .chip{
       font-size:12px;
-      letter-spacing:.02em;
-      color:#fff;
-      flex: 0 0 auto;
+      color: var(--muted);
+      border:1px solid var(--line);
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
     }
 
-    /* Sections */
-    .sections{
-      margin-top:14px;
+    /* cards */
+    .sectionGrid{
       display:grid;
-      grid-template-columns: 1fr;
-      gap:14px;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
     }
-    @media(min-width: 900px){
-      .sections{ grid-template-columns: 1.1fr .9fr; }
+    @media (max-width: 860px){
+      .sectionGrid{grid-template-columns:1fr}
     }
 
     .card{
       border:1px solid var(--line);
-      background: rgba(255,255,255,.02);
       border-radius: var(--radius);
-      padding:20px;
+      background: rgba(255,255,255,.04);
+      padding: 18px;
       box-shadow: var(--glow);
     }
     .card h2{
       margin:0 0 10px;
-      font-size:15px;
-      letter-spacing:.18em;
+      font-size: 16px;
+      letter-spacing:.10em;
       text-transform:uppercase;
     }
-    .card p{
-      margin:0;
-      color:var(--muted);
+    .card p, .card li{
+      color: var(--muted);
+      font-size: 14px;
+      line-height:1.6;
+    }
+    .card ul{
+      margin: 10px 0 0;
+      padding-left: 18px;
     }
 
-    .list{
-      margin:14px 0 0;
-      padding:0;
-      list-style:none;
-      display:grid;
-      gap:10px;
-    }
-    .list li{
-      padding:12px;
+    /* Roadmap */
+    .roadmap .phase{
       border:1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(255,255,255,.02);
-      color:var(--muted);
+      border-radius: 16px;
+      background: rgba(0,0,0,.16);
+      padding: 12px 12px;
+      margin-top: 10px;
     }
-    .list b{ color:var(--text); }
+    .phaseTitle{
+      display:flex; justify-content:space-between; gap:10px; align-items:baseline;
+      font-weight:900; letter-spacing:.06em;
+      margin-bottom:6px;
+      color: rgba(244,246,255,.95);
+    }
+    .tag{
+      font-size:12px; color: var(--muted);
+      border:1px solid var(--line);
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      white-space:nowrap;
+      font-weight:800;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
 
-    /* Links */
-    .links{
+    /* PIXEL STATUS HUD */
+    .hud{
       display:grid;
       grid-template-columns: 1fr;
-      gap:10px;
-      margin-top:12px;
+      gap: 10px;
     }
-    .link{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:center;
-      text-decoration:none;
+    .hudRow{
+      display:flex; justify-content:space-between; gap:10px;
       border:1px solid var(--line);
       border-radius: 14px;
-      padding:12px;
-      background: rgba(255,255,255,.02);
-      color:var(--text);
+      padding: 10px 12px;
+      background: rgba(0,0,0,.22);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      color: rgba(244,246,255,.92);
     }
-    .link span{ color:var(--muted); font-size:12px; }
-    .link:hover{ background: rgba(255,255,255,.05); }
+    .hudRow span.label{color:rgba(167,175,198,.95)}
 
-    .footer{
-      margin-top:18px;
-      padding:18px 6px 0;
-      color:var(--muted);
-      font-size:12px;
-      text-align:center;
+    .energyWrap{
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(0,0,0,.22);
     }
-    .footer a{ color:var(--muted); }
-    .footer a:hover{ color:var(--text); }
-
-    /* Small helper */
-    .tiny{
-      font-size:12px;
-      color:var(--muted);
+    .bar{
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .bar > i{
+      display:block;
+      height:100%;
+      width: 78%;
+      background: linear-gradient(90deg, rgba(107,255,183,.35), rgba(107,255,183,.85));
+      box-shadow: 0 0 18px rgba(107,255,183,.35);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{filter:brightness(1)}
+      50%{filter:brightness(1.25)}
+    }
+    .energyText{
       margin-top:10px;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      color: rgba(167,175,198,.95);
+      font-size: 12px;
     }
+
+    /* PIXEL LORE */
+    .loreGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 10px;
+    }
+    @media (max-width: 860px){
+      .loreGrid{grid-template-columns:1fr}
+    }
+    .loreCard{
+      border:1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(0,0,0,.16);
+      padding: 14px;
+    }
+    .loreTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:8px;
+    }
+    .loreTop strong{
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .loreTop .sig{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:12px;
+      color: rgba(167,175,198,.9);
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:4px 8px;
+      background: rgba(255,255,255,.03);
+      white-space:nowrap;
+    }
+
+    /* footer */
+    .foot{
+      margin-top: 14px;
+      text-align:center;
+      color: rgba(167,175,198,.75);
+      font-size: 12px;
+    }
+    .foot a{
+      color: rgba(244,246,255,.85);
+      border-bottom:1px dotted rgba(255,255,255,.25)
+    }
+    .foot a:hover{color:var(--text)}
+
+    /* Easter Egg Modal */
+    .modalBack{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.62);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index:999;
+    }
+    .modalBack.show{ display:flex; }
+
+    .modal{
+      width:min(520px, 96vw);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      box-shadow: 0 20px 70px rgba(0,0,0,.55), var(--glow);
+      backdrop-filter: blur(12px);
+      padding: 16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .modalHead{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+    }
+    .modalHead h3{
+      margin:0;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      font-size: 14px;
+    }
+    .close{
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.25);
+      color: rgba(244,246,255,.95);
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor:pointer;
+      font-weight:800;
+    }
+    .close:hover{ background: rgba(255,255,255,.06); }
+
+    .modalBody{
+      margin-top:10px;
+      color: var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+    .quote{
+      margin-top:12px;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      background: rgba(0,0,0,.22);
+      padding: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      color: rgba(244,246,255,.95);
+    }
+    .modalBtns{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    /* small toast */
+    .toast{
+      position:fixed;
+      bottom:18px;
+      left:50%;
+      transform:translateX(-50%);
+      background: rgba(0,0,0,.55);
+      border:1px solid rgba(255,255,255,.14);
+      padding:10px 12px;
+      border-radius: 999px;
+      color: rgba(244,246,255,.92);
+      font-size:13px;
+      display:none;
+      z-index:1000;
+      backdrop-filter: blur(10px);
+    }
+    .toast.show{ display:block; }
   </style>
 </head>
 
 <body>
-  <div class="grid" aria-hidden="true"></div>
+  <div class="grid"></div>
+  <div class="scan"></div>
+  <div class="flicker"></div>
 
   <div class="wrap">
-    <div class="topbar">
-      <a class="brand" href="#top" aria-label="PIXEL home">
-        <div class="brandMark">
-          <img src="image%20(12).jpg" alt="PIXEL logo">
-        </div>
-        <div class="brandText">PIXEL</div>
-      </a>
-
-      <div class="nav">
+    <div class="nav">
+      <div class="brand"><span class="dot"></span> PIXEL</div>
+      <div class="links">
         <a href="#story">Story</a>
-        <a href="#community">Community</a>
+        <a href="#lore">Lore</a>
+        <a href="#roadmap">Roadmap</a>
         <a href="#treasury">Treasury</a>
         <a href="#links">Links</a>
       </div>
     </div>
 
     <section class="hero" id="top">
-      <p class="kicker">Minimal • Meme • Community</p>
+      <div class="heroGrid">
+        <div>
+          <div class="kicker">Minimal • Meme • Community</div>
+          <h1>PIXEL</h1>
 
-      <div class="heroLogo" aria-label="PIXEL logo (animated)">
-        <img src="image%20(12).jpg" alt="PIXEL logo">
-      </div>
+          <p class="sub">
+            Pixel — fresh from cruising the cosmos — spotted our blue planet mid-odyssey.
+            Crypto? Blockchain? Never heard of it… but now he’s hooked.
+            Pixel’s on a mission and needs a crew. Who’s gonna show him what really sends it to the moon?
+            Join up, and let’s discover crypto with Pixel — from zero to the moon.
+          </p>
 
-      <h1>PIXEL</h1>
+          <p class="sub" style="margin-top:10px;">
+            From day one, the community decides Pixel’s path.
+          </p>
 
-      <!-- STORY (ENGLISH as requested) -->
-      <p class="tagline">
-        Pixel — fresh from cruising the cosmos — spotted our blue planet mid-odyssey.
-        Crypto? Blockchain? Never heard of it… but now he’s hooked.
-        Pixel’s on a mission and needs a crew. Who’s gonna show him what really sends it to the moon?
-        Join up, and let’s discover crypto with Pixel — from zero to the moon.
-      </p>
+          <div class="ctaRow" id="links">
+            <a class="btn primary" href="https://t.me/piXel1Community" target="_blank" rel="noopener">🚀 Join Telegram</a>
+            <a class="btn secondary" href="https://x.com/_pi_X_eL_" target="_blank" rel="noopener">𝕏 Follow on X</a>
+            <button class="btn" type="button" onclick="alert('Contract address (CA) will be added once available.')">🧩 Contract (coming)</button>
+          </div>
 
-      <div class="cta">
-        <a class="btn primary" href="https://t.me/piXel1Community" target="_blank" rel="noreferrer">
-          <span class="coin">C</span> Join Telegram
-        </a>
-        <a class="btn" href="https://x.com/_pi_X_eL_" target="_blank" rel="noreferrer">
-          Follow on X
-        </a>
-        <a class="btn" href="#links">
-          All Links
-        </a>
-      </div>
+          <div class="chips">
+            <div class="chip">Community-driven</div>
+            <div class="chip">Story-first</div>
+            <div class="chip">Clean Pixel Aesthetic</div>
+            <div class="chip">Transparent updates</div>
+          </div>
+        </div>
 
-      <div class="tiny">
-        Built by the community. Pixel learns — the crew decides the path.
+        <aside class="logoCard">
+          <div class="logoWrap">
+            <button class="pixelLogoBtn" id="pixelBtn" aria-label="Open secret signal">
+              <img class="pixelLogo" src="image%20(12).jpg" alt="PIXEL Logo" />
+            </button>
+          </div>
+
+          <div class="card" style="margin-top:10px; background:rgba(255,255,255,.03)">
+            <h2 style="margin:0 0 10px;">PIXEL STATUS</h2>
+            <div class="hud">
+              <div class="hudRow"><span class="label">Location</span><span>Earth</span></div>
+              <div class="hudRow"><span class="label">Mood</span><span>Curious</span></div>
+              <div class="hudRow"><span class="label">Mission</span><span>Find community</span></div>
+
+              <div class="energyWrap">
+                <div class="hudRow" style="border:none; background:transparent; padding:0; margin:0 0 8px;">
+                  <span class="label">Energy</span><span>███████░░░</span>
+                </div>
+                <div class="bar"><i></i></div>
+                <div class="energyText">
+                  <span>Signal: active</span>
+                  <span>Scan: running</span>
+                  <span>Mode: community</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
 
-    <div class="sections">
+    <div class="sectionGrid">
       <section class="card" id="story">
         <h2>Story</h2>
         <p>
           Pixel didn’t land here with a masterplan — he landed here with questions.
-          He doesn’t know our world, our rules, or why people obsess over charts.
+          He doesn’t know our world, our rules, or why humans obsess over charts.
           That’s the point: this is a live journey. The community becomes Pixel’s compass.
         </p>
-
-        <ul class="list">
-          <li><b>New world:</b> Pixel knows nothing about crypto — pure curiosity.</li>
-          <li><b>New crew:</b> the community teaches, votes, builds the vibe.</li>
-          <li><b>New route:</b> we choose the path together, step by step.</li>
+        <ul>
+          <li><strong>New world:</strong> Pixel knows nothing about crypto — pure curiosity.</li>
+          <li><strong>New crew:</strong> the community teaches, votes, builds the vibe.</li>
+          <li><strong>New route:</strong> we choose the path together, step by step.</li>
         </ul>
       </section>
 
-      <section class="card" id="community">
-        <h2>Community-Driven</h2>
+      <section class="card" id="treasury">
+        <h2>Community Treasury</h2>
         <p>
-          From day one, the crew decides where Pixel goes next.
-          Narrative, moves, and future actions are guided by the community — not top-down orders.
+          A community treasury is a project wallet used for the ecosystem — not personal use.
+          It can support things like marketing, development, community rewards, and (later) buybacks —
+          guided together with the community.
         </p>
-
-        <ul class="list">
-          <li><b>Direction:</b> the community picks the route Pixel takes.</li>
-          <li><b>Decisions:</b> ideas get tested in public, then executed.</li>
-          <li><b>Culture:</b> memes are the engine — consistency is the fuel.</li>
+        <ul>
+          <li><strong>Team Wallet:</strong> operations + building.</li>
+          <li><strong>Treasury:</strong> community-guided support for growth.</li>
+          <li><strong>Rule:</strong> we announce only what we can deliver.</li>
         </ul>
+        <p style="margin-top:10px; color:rgba(167,175,198,.75)">
+          Contract address (CA) will be added once available.
+        </p>
       </section>
     </div>
 
-    <section class="card" id="treasury" style="margin-top:14px;">
-      <h2>Treasury</h2>
+    <section class="card" id="lore" style="margin-top:14px;">
+      <h2>Pixel Lore</h2>
       <p>
-        Pixel is building with a team wallet and a community-guided treasury.
-        Later on, the community can steer actions like buybacks and other initiatives —
-        only when it makes sense and only with clear communication.
+        Short chapters. Easy to share. The community expands the lore over time.
       </p>
 
-      <ul class="list">
-        <li><b>Team Wallet:</b> operations + building.</li>
-        <li><b>Treasury:</b> community-guided support for growth.</li>
-        <li><b>Future actions:</b> buybacks and more — decided together.</li>
-      </ul>
+      <div class="loreGrid">
+        <div class="loreCard">
+          <div class="loreTop">
+            <strong>Chapter 01 — The Glitch</strong>
+            <span class="sig">SIG//UNKNOWN</span>
+          </div>
+          <p>
+            Pixel was cruising deep space when his ship started glitching — signals broken, systems blinking.
+            One last ping appeared on the radar: a loud blue planet.
+          </p>
+        </div>
 
-      <div class="tiny">
-        Note: we keep it simple and transparent. We announce only what we can deliver.
+        <div class="loreCard">
+          <div class="loreTop">
+            <strong>Chapter 02 — The Landing</strong>
+            <span class="sig">COORD//EARTH</span>
+          </div>
+          <p>
+            Impact. Static. Silence. Pixel wakes up on Earth — confused, curious, and instantly obsessed
+            with human behavior… especially charts.
+          </p>
+        </div>
+
+        <div class="loreCard">
+          <div class="loreTop">
+            <strong>Chapter 03 — The Discovery</strong>
+            <span class="sig">DATA//CRYPTO</span>
+          </div>
+          <p>
+            Crypto. Blockchain. Memes. “GM.” Pixel doesn’t understand it yet — but he wants in.
+            He starts looking for a crew to translate this world.
+          </p>
+        </div>
+
+        <div class="loreCard">
+          <div class="loreTop">
+            <strong>Chapter 04 — The Crew</strong>
+            <span class="sig">MODE//COMMUNITY</span>
+          </div>
+          <p>
+            Pixel is no longer alone. The community becomes the mission.
+            Together, the crew decides what comes next.
+          </p>
+        </div>
       </div>
     </section>
 
-    <section class="card" id="links" style="margin-top:14px;">
-      <h2>Links</h2>
-      <p>Everything important in one place.</p>
+    <section class="card roadmap" id="roadmap" style="margin-top:14px;">
+      <h2>Roadmap</h2>
 
-      <div class="links">
-        <a class="link" href="https://t.me/piXel1Community" target="_blank" rel="noreferrer">
-          Telegram <span>t.me/piXel1Community</span>
-        </a>
-        <a class="link" href="https://x.com/_pi_X_eL_" target="_blank" rel="noreferrer">
-          X <span>x.com/_pi_X_eL_</span>
-        </a>
-        <a class="link" href="mailto:pixel.unity@proton.me">
-          Email <span>pixel.unity@proton.me</span>
-        </a>
-
-        <!-- Optional: add your Pump.fun / chart later -->
-        <a class="link" href="#" onclick="alert('Add your Pump.fun / Chart link here later.'); return false;">
-          Pump.fun / Chart <span>(add link)</span>
-        </a>
-      </div>
-    </section>
-
-    <div class="footer">
-      <div>© <span id="y"></span> PIXEL • Meme project • Not financial advice.</div>
-      <div style="margin-top:8px;">Hosted free on GitHub Pages.</div>
-    </div>
+      <div class="phase">
+  <div class="phaseTitle">
+    <div>Phase 1 — Lands on Earth & builds a community</div>
+    <div class="tag">Launch</div>
   </div>
+  <p style="margin:0;">
+    Pixel arrives on Earth.  
+    The first community forms around him.  
+    Telegram and X start growing as people discover the story.
+  </p>
+</div>
 
-  <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
-  </script>
+<div class="phase">
+  <div class="phaseTitle">
+    <div>Phase 2 — Discovers crypto</div>
+    <div class="tag">Discovery</div>
+  </div>
+  <p style="margin:0;">
+    Pixel discovers crypto for the first time.  
+    Charts, tokens, memes and market emotions start making sense.
+  </p>
+</div>
+
+<div class="phase">
+  <div class="phaseTitle">
+    <div>Phase 3 — Explores blockchain</div>
+    <div class="tag">Deep Dive</div>
+  </div>
+  <p style="margin:0;">
+    Pixel begins to explore blockchain technology.  
+    Transparency, wallets and decentralized systems become part of the journey.
+  </p>
+</div>
+
+<div class="phase">
+  <div class="phaseTitle">
+    <div>Phase 4 — The Mission</div>
+    <div class="tag">Community</div>
+  </div>
+  <p style="margin:0;">
+    Pixel is no longer alone.  
+    The community becomes the mission.  
+    Together the crew decides what happens next.
+  </p>
+</div>
+</section>
+<div class="foot">
+Not financial advice • Links:
+<a href="https://x.com/_pi_X_eL_" target="_blank">X</a> •
+<a href="https://t.me/piXel1Community" target="_blank">Telegram</a>
+</div>
+
+</div>
+
 </body>
 </html>
