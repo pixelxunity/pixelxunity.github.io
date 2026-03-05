@@ -1,559 +1,259 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PIXEL</title>
-  <meta name="description" content="Pixel — fresh from cruising the cosmos. Mission: find community." />
-  <style>
-    :root{
-      --bg:#070A0F;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(0,0,0,.22);
-      --line: rgba(255,255,255,.10);
-      --text: rgba(235,242,255,.92);
-      --muted: rgba(180,195,220,.78);
-      --green: #6bffb7;
-      --blue:  #5aa7ff;
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
-      --r: 20px;
-    }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
-      background:
-        radial-gradient(800px 500px at 50% -10%, rgba(255,255,255,.06), transparent 55%),
-        radial-gradient(900px 600px at 10% 30%, rgba(90,167,255,.10), transparent 55%),
-        radial-gradient(900px 600px at 90% 60%, rgba(107,255,183,.08), transparent 55%),
-        var(--bg);
-      overflow-x:hidden;
-    }
-    a{color:inherit;text-decoration:none}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    /* subtle grid overlay */
-    .gridOverlay{
-      position:fixed; inset:0;
-      pointer-events:none;
-      background-image:
-        linear-gradient(to right, rgba(255,255,255,.04) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,.04) 1px, transparent 1px);
-      background-size: 26px 26px;
-      opacity:.12;
-      mask-image: radial-gradient(60% 60% at 50% 18%, black 40%, transparent 80%);
-      z-index:0;
-    }
+<title>PIXEL</title>
 
-    .wrap{
-      position:relative;
-      z-index:1;
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 18px 16px 64px;
-    }
+<style>
 
-    /* top nav pill */
-    .topNav{
-      position: sticky;
-      top: 10px;
-      z-index: 9;
-      display:flex;
-      justify-content:center;
-      margin-bottom: 18px;
-    }
-    .navPill{
-      display:flex;
-      gap: 10px;
-      align-items:center;
-      padding: 10px 12px;
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.35);
-      backdrop-filter: blur(10px);
-      border-radius: 999px;
-      box-shadow: var(--shadow);
-      overflow-x:auto;
-      max-width:100%;
-    }
-    .navDot{
-      width:10px;height:10px;border-radius:999px;background:var(--green);
-      box-shadow: 0 0 18px rgba(107,255,183,.55);
-      flex:0 0 auto;
-    }
-    .navItem{
-      padding: 8px 12px;
-      border-radius: 999px;
-      color: var(--muted);
-      font-weight: 600;
-      letter-spacing:.02em;
-      white-space:nowrap;
-      flex:0 0 auto;
-    }
-    .navItem.active{
-      color: var(--text);
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-    }
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#070A0F;
+color:white;
+}
 
-    /* HERO layout */
-    .hero{
-      display:grid;
-      grid-template-columns: 1.2fr .9fr;
-      gap: 16px;
-      align-items:start;
-    }
-    @media (max-width: 900px){
-      .hero{grid-template-columns:1fr; gap:14px;}
-    }
+.container{
+max-width:1000px;
+margin:auto;
+padding:20px;
+}
 
-    .card{
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.18));
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .cardPad{padding: 18px;}
-    .title{
-      font-size: 56px;
-      letter-spacing:.18em;
-      margin: 0 0 10px;
-      line-height:1;
-    }
-    @media (max-width: 520px){
-      .title{font-size: 46px;}
-    }
-    .lead{
-      margin:0 0 14px;
-      color: var(--muted);
-      font-size: 18px;
-      line-height:1.5;
-    }
-    .lead strong{color:var(--text)}
-    .btnRow{
-      display:flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-    .btn{
-      border: 1px solid rgba(255,255,255,.14);
-      padding: 12px 16px;
-      border-radius: 999px;
-      font-weight: 800;
-      letter-spacing:.02em;
-      background: rgba(0,0,0,.25);
-      box-shadow: 0 10px 28px rgba(0,0,0,.35);
-      transition: transform .12s ease, filter .12s ease;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width: 170px;
-    }
-    .btn:hover{transform: translateY(-1px); filter: brightness(1.06);}
-    .btn.primary{
-      border-color: rgba(107,255,183,.35);
-      background: linear-gradient(180deg, rgba(107,255,183,.22), rgba(0,0,0,.22));
-    }
-    .btn.secondary{
-      border-color: rgba(90,167,255,.35);
-      background: linear-gradient(180deg, rgba(90,167,255,.18), rgba(0,0,0,.22));
-    }
-    .btn.ghost{
-      opacity:.9;
-      min-width: 220px;
-    }
+.hero{
+background:#0f141c;
+border-radius:20px;
+padding:30px;
+margin-bottom:20px;
+}
 
-    .chips{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top: 14px;
-    }
-    .chip{
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.18);
-      color: rgba(220,235,255,.75);
-      font-weight: 700;
-      font-size: 14px;
-      letter-spacing:.02em;
-    }
+.title{
+font-size:60px;
+letter-spacing:10px;
+}
 
-    /* status card */
-    .statusTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom: 10px;
-    }
-    .statusLeft{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      font-weight: 900;
-      letter-spacing:.08em;
-    }
-    .miniLogo{
-      width:24px;height:24px;border-radius:7px;
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(0,0,0,.25);
-      display:inline-flex;align-items:center;justify-content:center;
-      overflow:hidden;
-    }
-    .miniLogo img{width:100%;height:100%;object-fit:cover}
-    .liveTag{
-      font-weight:900;
-      color: rgba(255,255,255,.9);
-      opacity:.9;
-    }
-    .statusGrid{
-      display:grid;
-      gap:10px;
-    }
-    .kv{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.16);
-      color: rgba(220,235,255,.82);
-      font-weight: 700;
-    }
-    .kv span{color: rgba(255,255,255,.92)}
-    .bar{
-      height:10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.22);
-      overflow:hidden;
-      margin-top: 10px;
-    }
-    .bar > div{
-      height:100%;
-      width:62%;
-      background: linear-gradient(90deg, rgba(107,255,183,1), rgba(90,167,255,1));
-      filter: drop-shadow(0 0 12px rgba(90,167,255,.35));
-    }
-    .tiny{
-      margin-top: 10px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      color: rgba(170,190,220,.85);
-      font-size: 12px;
-      display:flex;
-      flex-wrap:wrap;
-      gap: 8px;
-      opacity:.95;
-    }
+.text{
+color:#b8c1d1;
+line-height:1.6;
+margin-bottom:20px;
+}
 
-    /* Character card (MOVE UP) */
-    .characterCard{
-      margin-top: 10px; /* small gap under hero */
-      padding: 14px;
-    }
-    .characterFrame{
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.22);
-      padding: 14px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
-    }
-    .characterImg{
-      width: 100%;
-      max-width: 520px;
-      margin: 0 auto;
-      display:block;
-      height: auto;
-      image-rendering: pixelated;
-      filter: drop-shadow(0 18px 40px rgba(0,0,0,.55));
-    }
-    /* This is the key: pull it upward a bit visually */
-    .characterWrap{
-      display:flex;
-      justify-content:center;
-      transform: translateY(-10px);
-    }
+.btn{
+display:block;
+width:100%;
+padding:16px;
+margin-top:12px;
+border-radius:30px;
+text-align:center;
+font-weight:bold;
+text-decoration:none;
+}
 
-    /* sections */
-    .section{
-      margin-top: 18px;
-    }
-    .sectionTitle{
-      margin: 0 0 8px;
-      font-weight: 1000;
-      letter-spacing:.14em;
-      font-size: 16px;
-      color: rgba(240,246,255,.92);
-    }
-    .p{
-      margin: 0 0 10px;
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 16px;
-    }
-    .list{
-      margin: 0;
-      padding-left: 18px;
-      color: rgba(210,225,245,.82);
-      line-height: 1.7;
-    }
+.telegram{
+background:linear-gradient(90deg,#63ffa6,#2a7cff);
+color:white;
+}
 
-    .twoCol{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    @media (max-width: 900px){
-      .twoCol{grid-template-columns:1fr;}
-    }
+.x{
+background:linear-gradient(90deg,#2a7cff,#1a3dff);
+color:white;
+}
 
-    .linksGrid{
-      display:grid;
-      gap:10px;
-    }
-    .linkItem{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.16);
-      transition: transform .12s ease, filter .12s ease;
-    }
-    .linkItem:hover{transform: translateY(-1px); filter: brightness(1.06);}
-    .linkItem small{color: rgba(170,190,220,.85)}
-    .footerTip{
-      margin-top: 14px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      color: rgba(170,190,220,.85);
-      font-size: 12px;
-      opacity:.9;
-    }
-  </style>
+.contract{
+background:#0b0f14;
+border:1px solid #1e2530;
+color:white;
+}
+
+.tags{
+margin-top:20px;
+}
+
+.tag{
+display:inline-block;
+border:1px solid #2b3440;
+padding:8px 14px;
+border-radius:20px;
+margin:6px;
+color:#b8c1d1;
+}
+
+.status{
+background:#0f141c;
+border-radius:20px;
+padding:25px;
+margin-bottom:20px;
+}
+
+.statusRow{
+display:flex;
+justify-content:space-between;
+padding:12px 0;
+border-bottom:1px solid #1f2630;
+}
+
+.progress{
+height:10px;
+background:#10151c;
+border-radius:20px;
+margin-top:15px;
+}
+
+.bar{
+height:10px;
+width:65%;
+border-radius:20px;
+background:linear-gradient(90deg,#63ffa6,#2a7cff);
+}
+
+.character{
+background:#0f141c;
+border-radius:20px;
+padding:30px;
+text-align:center;
+margin-top:-10px;
+}
+
+.character img{
+width:100%;
+max-width:360px;
+display:block;
+margin:auto;
+image-rendering:pixelated;
+}
+
+.section{
+background:#0f141c;
+border-radius:20px;
+padding:25px;
+margin-top:20px;
+}
+
+.section h2{
+letter-spacing:4px;
+}
+
+</style>
 </head>
+
 <body>
-  <div class="gridOverlay"></div>
-  <div class="wrap">
-    <div class="topNav">
-      <div class="navPill" id="nav">
-        <span class="navDot"></span>
-        <a class="navItem active" href="#top">PIXEL</a>
-        <a class="navItem" href="#story">Story</a>
-        <a class="navItem" href="#treasury">Treasury</a>
-        <a class="navItem" href="#roadmap">Roadmap</a>
-        <a class="navItem" href="#links">Links</a>
-      </div>
-    </div>
 
-    <div id="top" class="hero">
-      <div class="card">
-        <div class="cardPad">
-          <h1 class="title">PIXEL</h1>
-          <p class="lead">
-            Pixel — fresh from cruising the cosmos. Crypto? Blockchain? Never heard of it…
-            but now he’s hooked. Pixel landed on Earth and is curious.
-            The mission is simple: <strong>find community.</strong>
-          </p>
+<div class="container">
 
-          <div class="btnRow">
-            <a id="btnTg" class="btn primary" href="#" target="_blank" rel="noopener">Join Telegram</a>
-            <a id="btnX"  class="btn secondary" href="#" target="_blank" rel="noopener">Follow on X</a>
-            <a class="btn ghost" href="#links">Contract (coming)</a>
-          </div>
+<div class="hero">
 
-          <div class="chips">
-            <span class="chip">Minimal</span>
-            <span class="chip">Meme</span>
-            <span class="chip">Community-first</span>
-            <span class="chip">Transparent updates</span>
-          </div>
-        </div>
-      </div>
+<div class="title">PIXEL</div>
 
-      <div class="card">
-        <div class="cardPad">
-          <div class="statusTop">
-            <div class="statusLeft">
-              <span class="miniLogo"><img src="logo.png" alt="logo"></span>
-              <span>PIXEL STATUS</span>
-            </div>
-            <span class="liveTag">LIVE</span>
-          </div>
+<div class="text">
+Pixel — fresh from cruising the cosmos. Crypto? Blockchain? Never heard of it… but now he’s hooked. Pixel landed on Earth and is curious. The mission is simple: <b>find community.</b>
+</div>
 
-          <div class="statusGrid">
-            <div class="kv"><div>Location</div><span>Earth</span></div>
-            <div class="kv"><div>Mood</div><span>Curious</span></div>
-            <div class="kv"><div>Mission</div><span>Find community</span></div>
-          </div>
+<a class="btn telegram" href="https://t.me/piXel1Community" target="_blank">
+Join Telegram
+</a>
 
-          <div class="bar"><div></div></div>
+<a class="btn x" href="https://x.com/_pi_X_eL_" target="_blank">
+Follow on X
+</a>
 
-          <div class="tiny">
-            <span>Signal: active</span>
-            <span>•</span>
-            <span>Scan: running</span>
-            <span>•</span>
-            <span>Mode: community</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Character (moved up) -->
-    <div class="card characterCard">
-      <div class="characterFrame">
-        <div class="characterWrap">
-          <!-- IMPORTANT: your file is named "charakter.png" -->
-          <img class="characterImg" src="charakter.png" alt="Pixel character">
-        </div>
-      </div>
-    </div>
+<a class="btn contract">
+Contract (coming)
+</a>
 
-    <div class="twoCol section">
-      <div id="story" class="card">
-        <div class="cardPad">
-          <h2 class="sectionTitle">STORY</h2>
-          <p class="p">
-            Pixel didn’t land here with a masterplan — he landed here with questions.
-            No hype. No fake promises. Just curiosity and a mission to build something with real people.
-          </p>
-          <ul class="list">
-            <li><b>New world:</b> Pixel learns what crypto even is.</li>
-            <li><b>New crew:</b> the community shapes the vibe.</li>
-            <li><b>New route:</b> we decide the next steps together.</li>
-          </ul>
-        </div>
-      </div>
+<div class="tags">
 
-      <div id="treasury" class="card">
-        <div class="cardPad">
-          <h2 class="sectionTitle">COMMUNITY TREASURY</h2>
-          <p class="p">
-            Treasury is project fuel — not personal profit. Used for development, marketing,
-            community rewards and future growth.
-          </p>
-          <ul class="list">
-            <li><b>Team Wallet:</b> operations + building</li>
-            <li><b>Treasury:</b> community guided growth</li>
-            <li><b>Rule:</b> announce only what we can deliver</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+<span class="tag">Minimal</span>
+<span class="tag">Meme</span>
+<span class="tag">Community-first</span>
+<span class="tag">Transparent updates</span>
 
-    <div id="roadmap" class="card section">
-      <div class="cardPad">
-        <h2 class="sectionTitle">ROADMAP (PHASES)</h2>
-        <ul class="list">
-          <li><b>Phase 1:</b> Launch + socials + first holders</li>
-          <li><b>Phase 2:</b> Community growth + meme engine</li>
-          <li><b>Phase 3:</b> Utility experiments + partnerships</li>
-          <li><b>Phase 4:</b> Bigger ecosystem moves (only if earned)</li>
-        </ul>
-        <p class="p" style="margin-top:12px">
-          We move phase by phase — no rushing, no bullshit.
-        </p>
-      </div>
-    </div>
+</div>
 
-    <div id="links" class="card section">
-      <div class="cardPad">
-        <h2 class="sectionTitle">LINKS</h2>
+</div>
 
-        <div class="linksGrid">
-          <a class="linkItem" id="linkTg" href="#" target="_blank" rel="noopener">
-            <div>
-              <div style="font-weight:900">Telegram</div>
-              <small id="tgText">set your link</small>
-            </div>
-            <div style="opacity:.8;font-weight:900">↗</div>
-          </a>
+<div class="status">
 
-          <a class="linkItem" id="linkX" href="#" target="_blank" rel="noopener">
-            <div>
-              <div style="font-weight:900">X (Twitter)</div>
-              <small id="xText">set your link</small>
-            </div>
-            <div style="opacity:.8;font-weight:900">↗</div>
-          </a>
+<h2>PIXEL STATUS</h2>
 
-          <div class="linkItem" style="cursor:default">
-            <div>
-              <div style="font-weight:900">Contract</div>
-              <small>coming soon</small>
-            </div>
-            <div style="opacity:.55;font-weight:900">—</div>
-          </div>
-        </div>
-        
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="statusRow">
+<span>Location</span>
+<span>Earth</span>
+</div>
 
-  <script>
-    // ====== SET YOUR LINKS HERE (ONLY THESE 2 LINES) ======
-    const TG_LINK = "https://t.me/DEIN_TELEGRAM";
-    const X_LINK  = "https://x.com/DEIN_X";
-    // ======================================================
+<div class="statusRow">
+<span>Mood</span>
+<span>Curious</span>
+</div>
 
-    // Apply links to buttons + links section
-    const btnTg = document.getElementById("btnTg");
-    const btnX  = document.getElementById("btnX");
-    const linkTg = document.getElementById("linkTg");
-    const linkX  = document.getElementById("linkX");
+<div class="statusRow">
+<span>Mission</span>
+<span>Find community</span>
+</div>
 
-    btnTg.href = TG_LINK;
-    linkTg.href = TG_LINK;
-    document.getElementById("tgText").textContent = TG_LINK.replace("https://", "");
+<div class="progress">
+<div class="bar"></div>
+</div>
 
-    btnX.href = X_LINK;
-    linkX.href = X_LINK;
-    document.getElementById("xText").textContent = X_LINK.replace("https://", "");
+<p style="color:#8c97a9;margin-top:10px;">
+Signal: active • Scan: running • Mode: community
+</p>
 
-    // If user forgot to set links, disable click to avoid "not working"
-    function isPlaceholder(url){
-      return url.includes("DEIN_TELEGRAM") || url.includes("DEIN_X") || url === "#";
-    }
-    if (isPlaceholder(TG_LINK)) {
-      btnTg.href = "#links";
-      linkTg.href = "#links";
-      document.getElementById("tgText").textContent = "Replace TG_LINK in code";
-    }
-    if (isPlaceholder(X_LINK)) {
-      btnX.href = "#links";
-      linkX.href = "#links";
-      document.getElementById("xText").textContent = "Replace X_LINK in code";
-    }
+</div>
 
-    // Nav active state on scroll
-    const nav = document.getElementById("nav");
-    const items = Array.from(nav.querySelectorAll(".navItem"));
-    const ids = items.map(a => a.getAttribute("href")).filter(h => h && h.startsWith("#"));
-    const sections = ids.map(id => document.querySelector(id)).filter(Boolean);
+<div class="character">
 
-    const setActive = (hash) => {
-      items.forEach(a => a.classList.toggle("active", a.getAttribute("href") === hash));
-    };
+<img src="charakter.png">
 
-    const onScroll = () => {
-      const y = window.scrollY + 140;
-      let current = "#top";
-      for (const s of sections){
-        if (s.offsetTop <= y) current = "#" + s.id;
-      }
-      setActive(current);
-    };
-    window.addEventListener("scroll", onScroll, {passive:true});
-    onScroll();
-  </script>
+</div>
+
+<div class="section">
+
+<h2>STORY</h2>
+
+<p>
+Pixel didn’t land here with a masterplan — he landed here with questions. No hype. No fake promises. Just curiosity and a mission to build something with real people.
+</p>
+
+<ul>
+<li><b>New world:</b> Pixel learns what crypto even is.</li>
+<li><b>New crew:</b> the community shapes the vibe.</li>
+<li><b>New route:</b> we decide the next steps together.</li>
+</ul>
+
+</div>
+
+<div class="section">
+
+<h2>COMMUNITY TREASURY</h2>
+
+<p>
+Treasury is project fuel — not personal profit. Used for development, marketing, community rewards and future growth.
+</p>
+
+<ul>
+<li><b>Team Wallet:</b> operations + building</li>
+<li><b>Treasury:</b> community guided growth</li>
+<li><b>Rule:</b> announce only what we can deliver</li>
+</ul>
+
+</div>
+
+<div class="section">
+
+<h2>ROADMAP</h2>
+
+<ul>
+<li>Phase 1 — Launch + socials</li>
+<li>Phase 2 — Community growth</li>
+<li>Phase 3 — Meme expansion</li>
+<li>Phase 4 — Ecosystem development</li>
+</ul>
+
+</div>
+
+</div>
+
 </body>
 </html>
-    
