@@ -404,13 +404,13 @@ inset:0;
 border-radius:50%;
 
 background:conic-gradient(
-rgba(120,255,220,0.45) 0deg,
-rgba(120,255,220,0.25) 18deg,
-rgba(120,255,220,0.1) 45deg,
-transparent 90deg
+rgba(120,255,220,0.55) 0deg,
+rgba(120,255,220,0.35) 18deg,
+rgba(120,255,220,0.14) 45deg,
+transparent 120deg
 );
 
-animation: sweep 6s linear infinite;
+animation: sweep 14s linear infinite;
 }
     }
     @keyframes sweep{
@@ -447,15 +447,15 @@ rgba(120,255,220,.45),
 transparent
 );
 
-height:80%;
+height:150%;
 transform:translateY(-120%);
-animation:radarScan 6s linear infinite;
+animation:radarScan 18s linear infinite;
 mix-blend-mode:screen;
-opacity:.75;
+opacity:.35;
 }
     @keyframes radarScan{
-      0%{ transform: translateY(-120%); }
-      100%{ transform: translateY(220%); }
+      0%{ transform: translateY(-150%); }
+      100%{ transform: translateY(260%); }
     }
 
     /* blips */
@@ -464,9 +464,16 @@ opacity:.75;
       width:10px; height:10px;
       border-radius:50%;
       background: rgba(120,255,220,.95);
-      box-shadow: 0 0 0 6px rgba(120,255,220,.16), 0 0 18px rgba(120,255,220,.22);
-      transform: translate(-50%, -50%);
+      box-shadow: 0 0 6px rgba(120,255,220,.16), 0 0 18px rgba(120,255,220,.22);
+      
+      transform: translate(-50%, -50%) scale(.8);
+      
       opacity:.9;
+      transition:
+        opacity 2s ease,
+        transform 2s ease,
+        left 3s linear,
+        top 3s linear;
     }
     .blip.blue{
       background: rgba(74,125,255,.95);
@@ -477,6 +484,10 @@ opacity:.75;
       box-shadow: 0 0 0 6px rgba(255,255,255,.10), 0 0 16px rgba(255,255,255,.10);
       opacity:.7;
     }
+    .blip.active{
+opacity:.95;
+transform: translate(-50%,-50%) scale(1);
+}
     .pulse{
       animation: blipPulse 1.2s ease-in-out infinite;
     }
@@ -825,7 +836,7 @@ else{
   radarLabel.textContent = "SCANNING";
 }
 
-    }, 2200);
+    }, 8000);
 
   </script>
    <div style="margin-top:40px;text-align:center;color:rgba(255,255,255,0.35);font-size:12px;line-height:1.6">
