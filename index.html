@@ -250,7 +250,12 @@ opacity:.85;
     }
     .lead b{ color:var(--text) }
 
-    .btns{ display:flex; flex-direction:column; gap:12px; margin-top:10px; }
+    .btns{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:10px;
+}
     .btn{
       width:100%;
       border:none;
@@ -284,6 +289,9 @@ opacity:.85;
       opacity:.96;
     }
     .btnGhost:hover{ filter:brightness(1.05) }
+    .btnFull{
+      grid-clumn:1 / span 2;
+    }
 
     /* Chips (fix wasted space) */
     .chips{
@@ -647,7 +655,7 @@ Pixel â€” fresh from cruising the cosmos. Crypto? Blockchain? Never heard of itâ
               <div class="btns">
                 <a class="btn btnPrimary" href="https://t.me/piXel1Community" target="_blank" rel="noopener">Join Telegram</a>
                 <a class="btn btnSecondary" href="https://x.com/_pi_X_eL_" target="_blank" rel="noopener">Follow on X</a>
-                <a class="btn btnGhost" id="contractBtn" href="#" target="_blank" rel="noopener">Contract (coming)</a>
+                <a class="btn btnGhost btnFull" id="contractBtn" href="#" target="_blank" rel="noopener">Contract (coming)</a>
               </div>
 
               <div class="chips">
