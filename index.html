@@ -820,11 +820,11 @@ But one thing is clear.
              </div>
                 <script>
 
-function updateRadar(){
+  function updateRadar(){
 
   let tg = 1
-let x = 2
-let web = 3
+  let x = 2
+  let web = 3
 
   tg = Math.max(1, Math.min(6, tg + Math.floor(Math.random()*3)-1))
   x = Math.max(1, Math.min(6, x + Math.floor(Math.random()*3)-1))
@@ -834,10 +834,26 @@ let web = 3
   document.getElementById("xPulse").textContent = "+" + x
   document.getElementById("webPulse").textContent = "+" + web
 }
+                 function moveBlips(){
+
+  const tgBlip = document.getElementById("blipTG")
+  const xBlip = document.getElementById("blipX")
+  const webBlip = document.getElementById("blipWEB")
+
+  tgBlip.style.left = Math.random()*80 + "%"
+  tgBlip.style.top = Math.random()*80 + "%"
+
+  xBlip.style.left = Math.random()*80 + "%"
+  xBlip.style.top = Math.random()*80 + "%"
+
+  webBlip.style.left = Math.random()*80 + "%"
+  webBlip.style.top = Math.random()*80 + "%"
+}
+
+setInterval(moveBlips, 4000) 
 
 setInterval(updateRadar, 3000)
 
-setInterval(updateRadar, 2500)
 
 </script>
 
