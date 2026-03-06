@@ -822,15 +822,20 @@ But one thing is clear.
 
 function updateRadar(){
 
-  const tg = Math.floor(Math.random()*4)+1
-  const x = Math.floor(Math.random()*6)+1
-  const web = Math.floor(Math.random()*8)+1
+  let tg = 1
+let x = 2
+let web = 3
+
+  tg = Math.max(1, Math.min(6, tg + Math.floor(Math.random()*3)-1))
+  x = Math.max(1, Math.min(6, x + Math.floor(Math.random()*3)-1))
+  web = Math.max(1, Math.min(8, web + Math.floor(Math.random()*3)-1))
 
   document.getElementById("tgPulse").textContent = "+" + tg
   document.getElementById("xPulse").textContent = "+" + x
   document.getElementById("webPulse").textContent = "+" + web
-
 }
+
+setInterval(updateRadar, 3000)
 
 setInterval(updateRadar, 2500)
 
