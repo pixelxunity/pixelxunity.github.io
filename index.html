@@ -814,7 +814,24 @@ But one thing is clear.
                 <div class="stat"><b>tg ping</b><span class="score" id="tgPulse">+0</span></div>
                 <div class="stat"><b>x signal</b><span class="score" id="xPulse">+0</span></div>
                 <div class="stat"><b>web activity</b><span class="score" id="webPulse">+0</span></div>
-              </div>
+              </div
+                <script>
+
+function updateRadar(){
+
+  const tg = Math.floor(Math.random()*4)+1
+  const x = Math.floor(Math.random()*6)+1
+  const web = Math.floor(Math.random()*8)+1
+
+  document.getElementById("tgPulse").textContent = "+" + tg
+  document.getElementById("xPulse").textContent = "+" + x
+  document.getElementById("webPulse").textContent = "+" + web
+
+}
+
+setInterval(updateRadar, 2500)
+
+</script>
 
             </div>
           </div>
