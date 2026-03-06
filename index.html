@@ -137,14 +137,14 @@
     }
 
     .card{
-      border-radius:var(--radius);
-      background:var(--card);
-      border:1px solid var(--stroke);
-      box-shadow:0 30px 90px rgba(0,0,0,.50);
-      backdrop-filter:blur(12px);
-      overflow:hidden;
-      position:relative;
-    }
+  border-radius:var(--radius);
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.04);
+  box-shadow:0 30px 90px rgba(0,0,0,.50);
+  backdrop-filter:blur(12px);
+  overflow:hidden;
+  position:relative;
+}
 
     .cardInner{
       padding:18px;
@@ -162,7 +162,7 @@
     .figureBox{
       border-radius:18px;
       background:rgba(0,0,0,.22);
-      border:1px solid var(--stroke);
+      border:1px solid rgba(255,255,255,.05);
       padding:0;
       position:relative;
       overflow:hidden;
@@ -218,24 +218,24 @@
     }
 
     .btn{
-      width:72%;
-      max-width:320px;
-      margin:0 auto;
-      border:none;
-      cursor:pointer;
-      border-radius:999px;
-      padding:16px 18px;
-      font-weight:900;
-      letter-spacing:.2px;
-      font-size:16px;
-      transition:.18s ease;
-      border:1px solid transparent;
-      text-align:center;
-      user-select:none;
-      white-space:nowrap;
-      overflow:hidden;
-      display:block;
-    }
+  width:72%;
+  max-width:320px;
+  margin:0 auto;
+  border:none;
+  outline:none;
+  background-clip:padding-box;
+  border-radius:999px;
+  padding:16px 18px;
+  font-weight:900;
+  letter-spacing:.2px;
+  font-size:16px;
+  transition:.18s ease;
+  text-align:center;
+  user-select:none;
+  white-space:nowrap;
+  overflow:hidden;
+  display:block;
+}
 
     .btnPrimary{
       background:linear-gradient(90deg,#7fffd4,#5f8cff);
@@ -248,8 +248,8 @@
     }
 
     .btnSecondary{
-      background:rgba(74,125,255,.14);
-      border-color:rgba(74,125,255,.28);
+      background:rgba(74,125,255,.16);
+      border-color:1px solidrgba(74,125,255,.16);
       color:var(--text);
     }
 
@@ -259,7 +259,7 @@
 
     .btnGhost{
       background:rgba(255,255,255,.04);
-      border-color:var(--stroke);
+      border:1px solid rgba(255,255,255,.05);
       color:var(--text);
       opacity:.96;
     }
