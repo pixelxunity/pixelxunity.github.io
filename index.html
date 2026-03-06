@@ -391,12 +391,18 @@ margin-top:20px;
     /* Right stack */
     .stack{ display:flex; flex-direction:column; gap:18px; height:100%; }
     .titleRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:10px;
-    }
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+
+.titleRow .status{
+  width:110px;
+  text-align:right;
+  display:block;
+}
     #links h2{
       text-align:center;
       margin:0;
@@ -404,11 +410,10 @@ margin-top:20px;
       font-size:18px;
     }
     .live{
-      font-size:12px;
-      letter-spacing:.24em;
-      color:rgba(255,255,255,.62);
-      font-weight:900;
-    }
+  width:110px;
+  text-align:right;
+  display:block;
+}
 
     /* Status rows */
     .rows{ display:flex; flex-direction:column; gap:10px; }
