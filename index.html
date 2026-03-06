@@ -459,22 +459,21 @@ border:none;
     /* sweeping beam */
     .radarSweep{
 position:absolute;
-inset:0;
-border-radius:50%;
-background:conic-gradient(
-from 0deg,
-transparent 0deg,
-rgba(120,255,220,.03) 2deg,
-rgba(120,255,220,.08) 6deg,
-rgba(120,255,220,.16) 10deg,
-rgba(120,255,220,.28) 14deg,
-rgba(120,255,220,.14) 20deg,
-rgba(120,255,220,.06) 28deg,
-transparent 40deg
+left:50%;
+top:50%;
+width:140%;
+height:3px;
+transform-origin:left center;
+transform:rotate(0deg);
+background:linear-gradient(
+90deg,
+rgba(120,255,220,0.9) 0%,
+rgba(120,255,220,0.6) 30%,
+rgba(120,255,220,0.25) 60%,
+rgba(120,255,220,0.05) 100%
 );
-opacity:.95;
-transform-origin:50% 50%;
-animation:sweep 8s linear infinite;
+border-radius:3px;
+animation:sweep 6s linear infinite;
 z-index:2;
 pointer-events:none;
 }
@@ -513,16 +512,32 @@ rgba(120,255,220,.45),
 transparent
 );
 
-height:150%;
-transform:translateY(-120%);
-animation:radarScan 18s linear infinite;
-mix-blend-mode:screen;
-opacity:.35;
+.radarSweep{
+position:absolute;
+left:50%;
+top:50%;
+width:150%;
+height:3px;
+transform-origin:left center;
+transform:rotate(0deg);
+
+background:linear-gradient(
+90deg,
+rgba(120,255,220,0.9) 0%,
+rgba(120,255,220,0.6) 30%,
+rgba(120,255,220,0.25) 60%,
+rgba(120,255,220,0.05) 100%
+);
+
+border-radius:3px;
+animation:sweep 7s linear infinite;
+z-index:2;
+pointer-events:none;
 }
-    @keyframes radarScan{
-      0%{ transform: translateY(-150%); }
-      100%{ transform: translateY(260%); }
-    }
+     @keyframes sweep{
+0%{ transform:rotate(0deg); }
+100%{ transform:rotate(360deg); }
+} 
 
     /* blips */
     .blip{
@@ -554,9 +569,7 @@ opacity:.35;
 opacity:.95;
 transform: translate(-50%,-50%) scale(1);
 }
-    .pulse{
-      animation: blipPulse 1.2s ease-in-out infinite;
-    }
+
     @keyframes blipPulse{
       0%,100%{ transform: translate(-50%,-50%) scale(1); }
       50%{ transform: translate(-50%,-50%) scale(1.28); }
