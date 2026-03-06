@@ -776,7 +776,7 @@ But one thing is clear.
             <div class="cardInner">
               <div class="titleRow">
                 <h2>PIXEL STATUS</h2>
-                <div class="live">LIVE</div>
+                <div class="live">ACTIVE</div>
               </div>
 
               <div class="rows">
@@ -1091,9 +1091,9 @@ signal scan in progress
 
       // Activity states
       const total = tg + xs + wb;
-      if (total >= 7){
-  radarLabel.textContent = "HOT SIGNAL";
-} else if (total >= 4){
+      if (total >= 20){
+  radarLabel.textContent = "HOT";
+} else if (total >= 12){
   radarLabel.textContent = "ACTIVE";
 } else {
   radarLabel.textContent = "SCANNING";
@@ -1108,6 +1108,26 @@ signal scan in progress
       jitterBlip(blipTG, 22, 62, 10);
       jitterBlip(blipX, 78, 38, 12);
       jitterBlip(blipWEB, 48, 56, 8);
+      // Random radar movement
+function randomMove(el){
+  const x = Math.random()*80 + 10;
+  const y = Math.random()*80 + 10;
+  el.style.left = x + "%";
+  el.style.top = y + "%";
+}
+
+// Sometimes move the blips
+if(Math.random() > 0.6){
+  randomMove(blipTG);
+}
+
+if(Math.random() > 0.6){
+  randomMove(blipX);
+}
+
+if(Math.random() > 0.7){
+  randomMove(blipWEB);
+}
 
       // Sometimes dim web activity to show "0"
      
