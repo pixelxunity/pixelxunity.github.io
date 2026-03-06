@@ -627,7 +627,31 @@ transform: translate(-50%,-50%) scale(1);
     height: auto !important;
   }
     }
-      
+   @media (max-width: 920px){
+  .heroHeader,
+  .figureBox,
+  .figureBox img,
+  .figureImg{
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .heroHeader{
+    align-items: stretch !important;
+  }
+
+  .figureBox{
+    padding: 0 !important;
+    display: block !important;
+  }
+
+  .figureBox img,
+  .figureImg{
+    display: block !important;
+    margin: 0 auto !important;
+    height: auto !important;
+  }
+}   
   </style>
 </head>
 <body>
