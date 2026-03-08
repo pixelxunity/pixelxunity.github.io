@@ -241,17 +241,17 @@ letter-spacing:0.05em;
     }
 
     .btn{
-  width:72%;
-  max-width:320px;
+  width:64%;
+  max-width:260px;
   margin:0 auto;
   border:none;
   outline:none;
   background-clip:padding-box;
   border-radius:999px;
-  padding:16px 18px;
+  padding:10px 16px;
   font-weight:900;
   letter-spacing:.2px;
-  font-size:16px;
+  font-size:15px;
   transition:.18s ease;
   text-align:center;
   user-select:none;
@@ -261,14 +261,15 @@ letter-spacing:0.05em;
 }
 
     .btnPrimary{
-      background:linear-gradient(90deg,#7fffd4,#5f8cff);
-      color:#000;
-      box-shadow:0 10px 30px rgba(74,125,255,.25);
-    }
+background:linear-gradient(90deg,#74d8c0,#6b8fe0);
+color:#062a44;
+box-shadow:0 8px 18px rgba(90,140,220,0.16);
+}
 
     .btnPrimary:hover{
-      filter:brightness(1.02);
-    }
+filter:brightness(1.08);
+transform:translateY(-1px);
+}
 
     .btnSecondary{
       background:rgba(74,125,255,.16);
@@ -300,20 +301,20 @@ letter-spacing:0.05em;
     .joinSignal{
       display:flex;
       justify-content:center;
-      margin-top:20px;
+      margin-top:22px;
     }
 
     @keyframes signalPulse{
-      0%{box-shadow:0 0 0 0 rgba(95,140,255,0.7);}
-      70%{box-shadow:0 0 0 18px rgba(95,140,255,0);}
-      100%{box-shadow:0 0 0 0 rgba(95,140,255,0);}
-    }
+  0%   { box-shadow:0 0 0 0 rgba(109,134,200,0.18); }
+  70%  { box-shadow:0 0 0 10px rgba(109,134,200,0); }
+  100% { box-shadow:0 0 0 0 rgba(109,134,200,0); }
+}
 
     .signalButton{
       width:auto;
       max-width:180px;
       padding:10px 16px;
-      animation:signalPulse 2.5s infinite;
+      animation:signalPulse 3 infinite;
     }
 
     .chips{
@@ -517,7 +518,6 @@ letter-spacing:0.05em;
       opacity:0;
       transition:opacity .15s ease, transform .15s ease;
     }
-
     .blip.blue{
       background:rgba(74,125,255,.95);
       box-shadow:0 0 6px rgba(74,125,255,.16), 0 0 18px rgba(74,125,255,.12);
@@ -630,6 +630,42 @@ letter-spacing:0.05em;
         grid-template-columns:1fr 1fr;
       }
     }
+    @media (max-width: 600px){
+
+  .btn{
+    width:64%;
+    max-width:260px;
+    min-width:0;
+    margin:0 auto;
+    font-size:14px;
+    padding:10px 16px;
+  }
+
+  .btnFull{
+    width:64%;
+    max-width:260px;
+  }
+
+  .btnPrimary{
+    background:linear-gradient(90deg,#6fbca9,#6d86c8) !important;
+    color:#081f34 !important;
+    box-shadow:0 6px 12px rgba(90,140,220,0.10) !important;
+  }
+
+  .signalButton{
+    max-width:180px;
+    padding:8px 14px;
+    animation:none !important;
+    box-shadow:none !important;
+  }
+
+  .joinSignal{
+    gap:12px;
+    margin-top:14px;
+  }
+
+}
+    
   </style>
 </head>
 <body>
@@ -746,10 +782,11 @@ signal scan initializing • network activity pending
 
         </div>
       </section>
-
+       
+</section>
       <section class="section card" id="story">
         <div class="cardInner">
-          <h2>STORY | Transmission Log</h2>
+          <h2>STORY</h2>
           <p class="lead" style="margin-top:10px">
             <b>PIXEL</b> — an unknown traveler on a journey through the universe.
             During his journey he discovered a small blue planet full of signals.
@@ -780,35 +817,34 @@ signal scan initializing • network activity pending
           </ul>
         </div>
       </section>
+
+  
+    
+      <a class="twitter-timeline" >
       <section class="section card" id="roadmap">
         <div class="cardInner">
-          <h2>ROADMAP</h2>
+          <h2>MISSION LOG</h2>
           <ul class="lead" style="margin-top:12px">
-            <li><b>01 — ARRIVAL</b><br>
-              Pixel lands on Earth.<br>
-              Strange signals are detected.<br>
-              The first curious minds begin to gather.
-            </li>
+            <ul>
 
-            <li><b>02 — DISCOVERY</b><br>
-              Pixel starts exploring the internet.<br>
-              Memes, coins and communities appear everywhere.
-            </li>
+<li>✓ <b>01 — ARRIVAL</b><br>
+Pixel lands on Earth and detects signals from human networks.</li>
 
-            <li><b>03 — EXPLORATION</b><br>
-              Pixel begins to understand the world of crypto.<br>
-              More signals appear and the community grows.
-            </li>
+<li>▶ <b>02 — COMMUNITY FORMING</b><br>
+People begin connecting. The first members join the signal.</li>
 
-            <li><b>04 — THE SIGNAL</b><br>
-              Pixel is no longer alone.<br>
-              The signal becomes stronger.
-            </li>
-          </ul>
+<li>◻ <b>03 — COMMUNITY CONTROL</b><br>
+The community gains influence and begins shaping decisions.</li>
+
+<li>◻ <b>04 — SIGNAL EXPANSION</b><br>
+The network grows and spreads across the web.</li>
+
+</ul>
 
           <p style="margin-top:15px;opacity:0.7;">signal strength: increasing...</p>
         </div>
       </section>
+            
 
       <section class="section card" id="treasury">
         <div class="cardInner">
@@ -868,13 +904,45 @@ signal scan initializing • network activity pending
               🛰
             </a>
           </div>
+          <div style="margin-top:40px;text-align:center;">
 
-          <div class="footer">
+<div style="
+background:linear-gradient(90deg,#7fd6b5,#7bcfb3);
+color:#003d2e;
+padding:14px 24px;
+font-size:16px;
+border-radius:14px;
+  max-width:520px;
+  width:100%;
+box-shadow:0 0 10px rgba(52,211,153,0.18);
+font-weight:bold;
+display:inline-block;
+opacity:0.55;
+filter:grayscale(35%);
+cursor:not-allowed;
+  pointer-events:none;
+user-select:none;
+">
+ENTER MISSION CONTROL
+</div>
+
+</a>
+            <div style="margin-top:6px;color:#aaa;font-size:14px;line-height:0.8;">
+Community command center — opening soon
+</div>
+       </div>     
+  </div>
+      </section>
+        <div class="footer">
             <b>Disclaimer:</b> This site is for community + information only. Nothing here is financial advice.
             Crypto is risky — only use money you can afford to lose.
           </div>
-        </div>
-      </section>
+     <div style="margin-top:15px;text-align:center;color:rgba(255,255,255,0.5);font-size:13px;line-height:1.5;">    
+    PIXEL is a community-driven meme project created for entertainment purposes.<br>
+    Nothing on this site is financial advice or.<br>
+    Always do your own research before interacting with blockchain project.<br><br>
+    © 2026 PIXEL Project
+  </div>
 
     </main>
 
@@ -967,12 +1035,8 @@ signal scan initializing • network activity pending
     }, 4000);
   </script>
 
-  <div style="margin-top:10px;text-align:center;color:rgba(255,255,255,0.35);font-size:12px;line-height:1.6">
-    PIXEL is a community driven meme project created for entertainment purposes.<br>
-    Nothing on this website constitutes financial advice or an investment offer.<br>
-    Always do your own research before interacting with any blockchain project.<br><br>
-    © 2026 PIXEL Project
-  </div>
+ 
 
 </body>
 </html>
+    
